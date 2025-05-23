@@ -1,0 +1,87 @@
+const library =[];
+
+
+function Book(id, title, author, description){
+    if(!new.target){
+        throw error("calling a object constructor!");
+    }
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.description = description;
+    this.issued = false;
+
+}
+
+
+function addBookToLibrary(title, author, description){
+    const book = new Book(crypto.randomUUID(),title, author, description);
+    console.log(book);
+    library.push(book);
+}
+function displayBook(library){
+    library.forEach(book => {
+        if(document.querySelector(`[data-bookId="${book.id}"]`)==null){
+            const bookDiv = document.createElement("div");
+            bookDiv.classList.add("book");
+            bookDiv.setAttribute("data-bookId",book.id);
+            const upDiv = document.createElement("div");
+            bookDiv.classList.add("up");
+            const downDiv = document.createElement("div");
+            bookDiv.classList.add("down");
+            upDiv.innerHTML = `
+            <h1 class="book-title">Title : ${book.title} </h1>
+            <h3 class="book-author">By ${book.author} </h3>
+            <p class="book-description">About book : ${book.description} </p>
+        `;
+        if(book.issued){
+             downDiv.innerHTML = `
+            <button class="status-available" >Not Available </button>
+            `;
+        }else{
+            downDiv.innerHTML = `
+            <button class="status-unavailble" >Available </button>
+            `;
+        }
+        bookDiv.appendChild(upDiv);
+        bookDiv.appendChild(downDiv);
+        document.querySelector(".book-container").appendChild(bookDiv);
+        }
+    });
+}
+
+
+
+
+//events
+
+const addNewBookBtn = document.querySelector("#add-btn");
+addNewBookBtn.addEventListener("click",function(e){
+    e.preventDefault();
+
+    
+    const errorMessageEl = document.querySelector("#error-message");
+    const title = document.querySelector("#title").value;
+    const author = document.querySelector("#author").value;
+    const description = document.querySelector("#description").value;
+    
+
+    if((title!= null && title!="") && (author!=null && author!="")){
+        document.querySelector("#error-message").textContent = "";
+        addBookToLibrary(title,author,description);
+        document.querySelector("#title").value = "";
+        document.querySelector("#author").value = "";
+        document.querySelector("#description").value = "";
+        
+        errorMessageEl.textContent = "book added! successfully!";
+        errorMessageEl.style.color="green";
+        displayBook(library);
+
+    }else{
+        errorMessageEl.textContent = "some error occured!";
+        errorMessageEl.style.color="red";
+    }
+    
+})
+
+//availbiltyChange
