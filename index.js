@@ -104,13 +104,11 @@ bookContainerEl.addEventListener("click",function(e){
                     e.target.dataset.issued="true";
                     e.target.innerText = "Not Available";
                 }
-                
                 return book;
             }else{
                 return book;
             }
         } )
-        console.log(library)
         
     }
 })
@@ -120,16 +118,12 @@ bookContainerEl.addEventListener("click",e=>{
     if(e.target.matches(".delete-icon")){
         const bookEl = e.target.parentElement.parentElement;
         const bookId = bookEl.dataset.bookid;
-        library = library.filter(function(book){
-            if(book.id===bookId){
-               
-            }else{
-                return book;
-            }
-        } )
+        library = library.filter(book => book.id !== bookId);
+        bookContainerEl.innerHTML = "";
+        displayBook(library);
+
     }
-    bookContainerEl.innerHTML="";
-    displayBook(library);
+
 })
 
  
