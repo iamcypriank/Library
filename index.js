@@ -36,12 +36,14 @@ function displayBook(library){
         `;
         if(book.issued){
              downDiv.innerHTML = `
+             <img class="delete-icon" src="src/delete-filled-svgrepo-com.svg" alt="">
             <button class=issued-stats-btn" data-issued="${book.issued}" >Not Available </button>
-            <button class="delete-btn"><img class="delete-icon" src="src/delete-filled-svgrepo-com.svg" alt=""></button>`;
+            `;
         }else{
             downDiv.innerHTML = `
+            <img class="delete-icon" src="src/delete-filled-svgrepo-com.svg" alt="">
             <button class="issued-stats-btn" data-issued="${book.issued}" >Available </button>
-            <button class="delete-btn"><img class="delete-icon" src="src/delete-filled-svgrepo-com.svg" alt=""></button>`;
+            `;
         }
         bookDiv.appendChild(upDiv);
         bookDiv.appendChild(downDiv);
@@ -113,3 +115,21 @@ bookContainerEl.addEventListener("click",function(e){
     }
 })
 
+
+bookContainerEl.addEventListener("click",e=>{
+    if(e.target.matches(".delete-icon")){
+        const bookEl = e.target.parentElement.parentElement;
+        const bookId = bookEl.dataset.bookid;
+        library = library.filter(function(book){
+            if(book.id===bookId){
+               
+            }else{
+                return book;
+            }
+        } )
+    }
+    bookContainerEl.innerHTML="";
+    displayBook(library);
+})
+
+ 
