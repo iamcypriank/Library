@@ -1,4 +1,4 @@
-const library =[];
+let library =[];
 
 
 function Book(id, title, author, description){
@@ -21,14 +21,14 @@ function addBookToLibrary(title, author, description){
 }
 function displayBook(library){
     library.forEach(book => {
-        if(document.querySelector(`[data-bookId="${book.id}"]`)==null){
+        if(document.querySelector(`[data-bookid="${book.id}"]`)==null){
             const bookDiv = document.createElement("div");
             bookDiv.classList.add("book");
             bookDiv.setAttribute("data-bookId",book.id);
             const upDiv = document.createElement("div");
-            bookDiv.classList.add("up");
+            upDiv.classList.add("up");
             const downDiv = document.createElement("div");
-            bookDiv.classList.add("down");
+            downDiv.classList.add("down");
             upDiv.innerHTML = `
             <h1 class="book-title">Title : ${book.title} </h1>
             <h3 class="book-author">By ${book.author} </h3>
@@ -36,12 +36,12 @@ function displayBook(library){
         `;
         if(book.issued){
              downDiv.innerHTML = `
-            <button class="status-available" >Not Available </button>
-            `;
+            <button class=issued-stats-btn" data-issued="${book.issued}" >Not Available </button>
+            <button class="delete-btn"><img class="delete-icon" src="src/delete-filled-svgrepo-com.svg" alt=""></button>`;
         }else{
             downDiv.innerHTML = `
-            <button class="status-unavailble" >Available </button>
-            `;
+            <button class="issued-stats-btn" data-issued="${book.issued}" >Available </button>
+            <button class="delete-btn"><img class="delete-icon" src="src/delete-filled-svgrepo-com.svg" alt=""></button>`;
         }
         bookDiv.appendChild(upDiv);
         bookDiv.appendChild(downDiv);
@@ -85,3 +85,31 @@ addNewBookBtn.addEventListener("click",function(e){
 })
 
 //availbiltyChange
+const bookContainerEl = document.querySelector(".book-container");
+bookContainerEl.addEventListener("click",function(e){
+    if(e.target.matches(".issued-stats-btn")){
+        const bookEl = e.target.parentElement.parentElement;
+        const bookId = bookEl.dataset.bookid;
+        let stats = e.target.dataset.issued;
+        library = library.map(function(book){
+            if(book.id===bookId){
+                if(stats==="true") {
+                    book.issued=false ;
+                    e.target.dataset.issued="false";
+                    e.target.innerText = "Available";
+                }else{
+                    book.issued=true;
+                    e.target.dataset.issued="true";
+                    e.target.innerText = "Not Available";
+                }
+                
+                return book;
+            }else{
+                return book;
+            }
+        } )
+        console.log(library)
+        
+    }
+})
+

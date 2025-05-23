@@ -92,7 +92,14 @@ section.dashboard{
     gap: 4px ;
 }
 
-.status{
+[data-issued="true"]{
+    text-align: center;
+    padding: 12px;
+    width: 100px;
+    background-color: rgba(255, 0, 0,30);
+    justify-self: flex-end;
+}
+[data-issued="false"]{
     text-align: center;
     padding: 12px;
     width: 100px;
@@ -103,6 +110,18 @@ section.dashboard{
 .book > p{
     font-weight: lighter;
 
+}
+
+.delete-icon{
+    height: 100%;
+    width: 100%;
+}
+
+.delete-btn{
+    all: unset;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
 }
 
 
